@@ -4,174 +4,219 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Paperbloom | Your little study world</title>
+<title>Paperbloom 🌸</title>
 <style>
 * { box-sizing: border-box; }
 body {
   margin: 0;
   font-family: Arial, sans-serif;
-  background: #fff8fc;
-  color: #493747;
+  background: #fff5fa;
+  color: #593c56;
 }
 header {
+  padding: 22px 7%;
+  background: #f8c9df;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px 7%;
-  background: white;
-  border-bottom: 1px solid #f5e4ee;
+  flex-wrap: wrap;
+  gap: 12px;
 }
-.logo { font-size: 25px; font-weight: 800; color: #e65c9c; }
-.logo span { color: #a78add; }
-nav a {
-  margin-left: 20px;
-  color: #70566b;
-  text-decoration: none;
-  font-size: 14px;
+header h1 { margin: 0; }
+.hero {
+  text-align: center;
+  padding: 55px 20px;
+  background: linear-gradient(135deg,#ffe1ed,#e9dcff,#d9edff);
 }
+.hero h2 { font-size: 34px; }
+.hero p { font-size: 17px; }
+main { max-width: 1000px; margin: 35px auto; padding: 20px; }
 button {
-  border: 0;
-  border-radius: 25px;
-  padding: 13px 22px;
-  background: #ed75ad;
-  color: white;
+  border: none;
+  border-radius: 15px;
+  padding: 13px 20px;
+  background: #e9a9ca;
+  color: #593c56;
   font-weight: bold;
   cursor: pointer;
 }
-button:hover { opacity: .85; }
-.hero {
-  text-align: center;
-  padding: 75px 20px 55px;
-  background: linear-gradient(135deg,#ffe0ef,#eee4ff,#dff4ff);
-}
-.flower { font-size: 55px; }
-h1 { font-size: clamp(38px,7vw,65px); margin: 12px 0; }
-h1 span { color: #e65c9c; }
-.hero p { font-size: 17px; line-height: 1.7; color: #755e77; }
-.hero button { margin-top: 18px; font-size: 16px; }
-.section { padding: 45px 7%; text-align: center; }
-.section h2 { font-size: 28px; }
-.cards {
+button:hover { opacity: .8; }
+.notebooks {
   display: grid;
-  grid-template-columns: repeat(auto-fit,minmax(190px,1fr));
+  grid-template-columns: repeat(auto-fit,minmax(210px,1fr));
   gap: 18px;
   margin-top: 25px;
 }
-.card {
-  padding: 25px;
+.book {
+  min-height: 190px;
+  border-radius: 18px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 5px 15px #bda5b533;
+}
+.book h3 { margin-top: 0; }
+.book a {
+  text-decoration: none;
+  color: #593c56;
+  background: #ffffffbb;
+  padding: 11px;
+  text-align: center;
+  border-radius: 12px;
+  font-weight: bold;
+}
+#empty { color: #9b7893; }
+#creator {
+  display: none;
   background: white;
-  border: 1px solid #f4e1ec;
-  border-radius: 22px;
-  text-align: left;
-  box-shadow: 0 5px 18px #eac9dc33;
+  padding: 22px;
+  border-radius: 18px;
+  margin-top: 20px;
+  box-shadow: 0 5px 18px #bda5b533;
 }
-.card .emoji { font-size: 35px; }
-.card h3 { margin-bottom: 8px; }
-.card p { color: #8a7888; font-size: 14px; line-height: 1.5; }
-footer { padding: 25px; text-align: center; color: #a18a9d; }
-#dashboard { display:none; padding:35px 7%; }
-#dashboard input {
-  padding:14px; width:100%; max-width:400px;
-  border:1px solid #e8cbdc; border-radius:15px;
+input {
+  padding: 13px;
+  width: 100%;
+  border: 1px solid #e7c7db;
+  border-radius: 12px;
+  margin: 12px 0;
+  font-size: 16px;
 }
-.notebook {
-  background:#fce1ed;
-  min-height:130px;
-  border-radius:18px;
-  padding:20px;
+.colours {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 15px 0;
 }
-@media(max-width:600px) {
-  header { padding:16px; }
-  nav a { margin-left:8px; font-size:12px; }
-  .hero { padding-top:55px; }
+.swatch {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 3px solid white;
+  outline: 1px solid #ddd;
+  cursor: pointer;
 }
+.swatch.selected { outline: 3px solid #79547b; }
+footer { text-align: center; padding: 30px; color: #a17c99; }
 </style>
 </head>
 <body>
 
 <header>
-  <div class="logo">🌷 Paper<span>bloom</span></div>
-  <nav>
-    <a href="#features">Features</a>
-    <a href="#about">About</a>
-    <button onclick="showDashboard()">My space</button>
-  </nav>
+  <h1>🌸 Paperbloom</h1>
+  <span>My little study space ✨</span>
 </header>
 
-<main id="welcome">
-  <section class="hero">
-    <div class="flower">🌸</div>
-    <h1>Your little world of <span>learning.</span></h1>
-    <p>Dreamy notes, pretty stationery and smarter studying.<br>
-    Make every study session a little more magical.</p>
-    <button onclick="showDashboard()">Get started ✨</button>
-  </section>
-
-  <section class="section" id="features">
-    <h2>Everything in one happy place 💗</h2>
-    <div class="cards">
-      <div class="card">
-        <div class="emoji">📒</div>
-        <h3>Pretty notebooks</h3>
-        <p>Create and organise your own digital notebooks.</p>
-      </div>
-      <div class="card">
-        <div class="emoji">🧸</div>
-        <h3>Lovely stationery</h3>
-        <p>Decorate your pages with colours and cute designs.</p>
-      </div>
-      <div class="card">
-        <div class="emoji">📝</div>
-        <h3>Flashcards</h3>
-        <p>Practise what you've learned and remember more.</p>
-      </div>
-      <div class="card">
-        <div class="emoji">✨</div>
-        <h3>Study smarter</h3>
-        <p>Keep your learning and revision organised.</p>
-      </div>
-    </div>
-  </section>
-</main>
-
-<section id="dashboard">
-  <h1>Welcome to your study space 🌷</h1>
-  <p>Your little corner of the world.</p>
-  <input id="search" placeholder="Search your notebooks...">
-  <h2>My notebooks</h2>
-  <button onclick="createNotebook()">+ Create notebook</button>
-  <div class="cards" id="notebooks">
-    <div class="notebook">📒<h3>My first notebook</h3><p>Your ideas start here!</p></div>
-  </div>
-  <br>
-  <button onclick="showWelcome()">← Back home</button>
+<section class="hero">
+  <h2>Your space. Your notes. Your bloom. 💗</h2>
+  <p>A little place to organise your thoughts and make studying pretty.</p>
+  <button onclick="showCreator()">＋ Create a notebook</button>
 </section>
 
-<footer id="about">Made with love 🌷 Paperbloom</footer>
+<main>
+  <h2>My notebooks 📚</h2>
+  <p>All your little notebooks in one place.</p>
+
+  <section id="creator">
+    <h3>Create your notebook 🌷</h3>
+    <label for="bookName">What should we call it?</label>
+    <input id="bookName" placeholder="e.g. Biology revision">
+    <p>Choose your notebook cover colour:</p>
+    <div class="colours">
+      <div class="swatch selected" style="background:#ffc5dc" data-colour="#ffc5dc" onclick="chooseColour(this)"></div>
+      <div class="swatch" style="background:#d9c8ff" data-colour="#d9c8ff" onclick="chooseColour(this)"></div>
+      <div class="swatch" style="background:#c5e6ff" data-colour="#c5e6ff" onclick="chooseColour(this)"></div>
+      <div class="swatch" style="background:#c9edda" data-colour="#c9edda" onclick="chooseColour(this)"></div>
+      <div class="swatch" style="background:#fff0b8" data-colour="#fff0b8" onclick="chooseColour(this)"></div>
+      <div class="swatch" style="background:#ffd4c2" data-colour="#ffd4c2" onclick="chooseColour(this)"></div>
+      <div class="swatch" style="background:#e8d1c2" data-colour="#e8d1c2" onclick="chooseColour(this)"></div>
+    </div>
+    <button onclick="createNotebook()">Create my notebook 💕</button>
+    <button onclick="hideCreator()" style="background:#eee">Cancel</button>
+  </section>
+
+  <section class="notebooks" id="notebooks"></section>
+  <p id="empty">You haven't made any notebooks yet. Create your first one! 🌸</p>
+</main>
+
+<footer>Made with love and a little bit of pink 💗</footer>
 
 <script>
-function showDashboard() {
-  document.getElementById("welcome").style.display="none";
-  document.getElementById("dashboard").style.display="block";
-  window.scrollTo(0,0);
+let selectedColour = "#ffc5dc";
+
+function getBooks() {
+  return JSON.parse(localStorage.getItem("paperbloomBooks") || "[]");
 }
-function showWelcome() {
-  document.getElementById("dashboard").style.display="none";
-  document.getElementById("welcome").style.display="block";
-  window.scrollTo(0,0);
+
+function showCreator() {
+  document.getElementById("creator").style.display = "block";
+  document.getElementById("bookName").focus();
 }
+
+function hideCreator() {
+  document.getElementById("creator").style.display = "none";
+}
+
+function chooseColour(element) {
+  selectedColour = element.dataset.colour;
+  document.querySelectorAll(".swatch").forEach(s => s.classList.remove("selected"));
+  element.classList.add("selected");
+}
+
 function createNotebook() {
-  const name = prompt("What would you like to call your notebook?");
-  if (!name) return;
-  const book = document.createElement("div");
-  book.className="notebook";
-  const title=document.createElement("h3");
-  title.textContent="📒 "+name;
-  const description=document.createElement("p");
-  description.textContent="Your new notebook";
-  book.append(title,description);
-  document.getElementById("notebooks").appendChild(book);
+  const name = document.getElementById("bookName").value.trim();
+
+  if (!name) {
+    alert("Please give your notebook a name! 💗");
+    return;
+  }
+
+  const books = getBooks();
+  const id = Date.now().toString();
+
+  books.push({
+    id: id,
+    name: name,
+    colour: selectedColour
+  });
+
+  localStorage.setItem("paperbloomBooks", JSON.stringify(books));
+
+  document.getElementById("bookName").value = "";
+  hideCreator();
+  displayBooks();
 }
+
+function displayBooks() {
+  const books = getBooks();
+  const area = document.getElementById("notebooks");
+  area.innerHTML = "";
+
+  document.getElementById("empty").style.display =
+    books.length ? "none" : "block";
+
+  books.forEach(book => {
+    const card = document.createElement("div");
+    card.className = "book";
+    card.style.background = book.colour;
+
+    const title = document.createElement("h3");
+    title.textContent = "📖 " + book.name;
+
+    const link = document.createElement("a");
+    link.textContent = "Open notebook →";
+    link.href = "notebook.html?id=" + encodeURIComponent(book.id)
+      + "&name=" + encodeURIComponent(book.name);
+
+    card.appendChild(title);
+    card.appendChild(link);
+    area.appendChild(card);
+  });
+}
+
+displayBooks();
 </script>
+
 </body>
 </html>
