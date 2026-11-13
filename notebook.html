@@ -1,0 +1,149 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Paperbloom Notebook</title>
+<style>
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #fff0f6;
+  color: #593c56;
+}
+header {
+  padding: 18px;
+  background: #f7c6df;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+header h2 { margin: 0; }
+button, select {
+  border: 0;
+  border-radius: 12px;
+  padding: 10px 14px;
+  cursor: pointer;
+  background: white;
+  color: #593c56;
+}
+main {
+  max-width: 900px;
+  margin: 25px auto;
+  padding: 15px;
+}
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+  margin-bottom: 15px;
+}
+#page {
+  min-height: 650px;
+  padding: 35px;
+  outline: none;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 5px 20px #d8a9c766;
+  line-height: 1.8;
+  font-size: 17px;
+}
+#page.lined {
+  background-image: repeating-linear-gradient(
+    white 0px, white 31px, #c9d9f5 32px
+  );
+}
+#page.grid {
+  background-image:
+    linear-gradient(#d9d9ef 1px, transparent 1px),
+    linear-gradient(90deg, #d9d9ef 1px, transparent 1px);
+  background-size: 25px 25px;
+}
+#page.dotted {
+  background-image: radial-gradient(#cbbbd5 1px, transparent 1px);
+  background-size: 18px 18px;
+}
+.status {
+  text-align: center;
+  margin: 15px;
+  color: #8c6384;
+}
+</style>
+</head>
+<body>
+
+<header>
+  <h2>🌸 Paperbloom</h2>
+  <button onclick="saveNotes()">💗 Save notes</button>
+</header>
+
+<main>
+  <h2 contenteditable="true">My beautiful notebook ✨</h2>
+
+  <div class="toolbar">
+    <button onclick="document.execCommand('bold')"><b>B</b></button>
+    <button onclick="document.execCommand('italic')"><i>I</i></button>
+    <button onclick="document.execCommand('underline')"><u>U</u></button>
+
+    <select onchange="changeColour(this.value)">
+      <option value="#593c56">Dark purple</option>
+      <option value="#ff69a6">Pink</option>
+      <option value="#9b72cf">Lavender</option>
+      <option value="#539bd1">Blue</option>
+      <option value="#58a88a">Green</option>
+      <option value="#e5a33d">Yellow</option>
+    </select>
+
+    <select onchange="changePaper(this.value)">
+      <option value="plain">Plain paper</option>
+      <option value="lined">Lined paper</option>
+      <option value="grid">Grid paper</option>
+      <option value="dotted">Dotted paper</option>
+    </select>
+
+    <button onclick="addHeading()">✨ Add heading</button>
+    <button onclick="addSticker()">🌷 Add flower</button>
+  </div>
+
+  <div id="page" contenteditable="true" class="lined">
+    Start writing your beautiful notes here... 💕
+  </div>
+
+  <p class="status" id="status">Your notebook is ready 🌸</p>
+</main>
+
+<script>
+const page = document.getElementById('page');
+
+function changeColour(colour) {
+  document.execCommand('foreColor', false, colour);
+}
+
+function changePaper(style) {
+  page.className = style;
+}
+
+function addHeading() {
+  document.execCommand('formatBlock', false, 'h2');
+}
+
+function addSticker() {
+  document.execCommand('insertText', false, ' 🌸 ');
+}
+
+function saveNotes() {
+  localStorage.setItem('paperbloomNotes', page.innerHTML);
+  document.getElementById('status').textContent =
+    'Saved successfully! 💗';
+}
+
+const saved = localStorage.getItem('paperbloomNotes');
+if (saved) page.innerHTML = saved;
+</script>
+
+</body>
+</html>
