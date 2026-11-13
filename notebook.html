@@ -5,14 +5,17 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Paperbloom Notebook</title>
+
 <style>
 * { box-sizing: border-box; }
+
 body {
   margin: 0;
   font-family: Arial, sans-serif;
   background: #fff0f6;
   color: #593c56;
 }
+
 header {
   padding: 18px;
   background: #f7c6df;
@@ -22,26 +25,38 @@ header {
   flex-wrap: wrap;
   gap: 10px;
 }
+
 header h2 { margin: 0; }
+
 button, select {
   border: 0;
   border-radius: 12px;
-  padding: 10px 14px;
+  padding: 11px 14px;
   cursor: pointer;
   background: white;
   color: #593c56;
 }
+
+button:hover { opacity: .8; }
+
 main {
-  max-width: 900px;
+  max-width: 950px;
   margin: 25px auto;
   padding: 15px;
 }
+
+#notebookTitle {
+  font-size: 25px;
+  margin-bottom: 20px;
+}
+
 .toolbar {
   display: flex;
   flex-wrap: wrap;
   gap: 9px;
   margin-bottom: 15px;
 }
+
 #page {
   min-height: 650px;
   padding: 35px;
@@ -51,29 +66,45 @@ main {
   box-shadow: 0 5px 20px #d8a9c766;
   line-height: 1.8;
   font-size: 17px;
+  overflow-wrap: anywhere;
 }
+
 #page.lined {
   background-image: repeating-linear-gradient(
     white 0px, white 31px, #c9d9f5 32px
   );
 }
+
 #page.grid {
   background-image:
     linear-gradient(#d9d9ef 1px, transparent 1px),
     linear-gradient(90deg, #d9d9ef 1px, transparent 1px);
   background-size: 25px 25px;
 }
+
 #page.dotted {
   background-image: radial-gradient(#cbbbd5 1px, transparent 1px);
   background-size: 18px 18px;
 }
+
+#page.plain {
+  background: white;
+}
+
 .status {
   text-align: center;
   margin: 15px;
   color: #8c6384;
 }
+
+.back {
+  text-decoration: none;
+  color: #593c56;
+  font-weight: bold;
+}
 </style>
 </head>
+
 <body>
 
 <header>
@@ -82,12 +113,16 @@ main {
 </header>
 
 <main>
-  <h2 contenteditable="true">My beautiful notebook ✨</h2>
+
+  <a class="back" href="index.html">← Back to My Space</a>
+
+  <h2 id="notebookTitle">My beautiful notebook ✨</h2>
 
   <div class="toolbar">
-    <button onclick="document.execCommand('bold')"><b>B</b></button>
-    <button onclick="document.execCommand('italic')"><i>I</i></button>
-    <button onclick="document.execCommand('underline')"><u>U</u></button>
+
+    <button onclick="formatText('bold')"><b>B</b></button>
+    <button onclick="formatText('italic')"><i>I</i></button>
+    <button onclick="formatText('underline')"><u>U</u></button>
 
     <select onchange="changeColour(this.value)">
       <option value="#593c56">Dark purple</option>
@@ -99,50 +134,84 @@ main {
     </select>
 
     <select onchange="changePaper(this.value)">
-      <option value="plain">Plain paper</option>
       <option value="lined">Lined paper</option>
+      <option value="plain">Plain paper</option>
       <option value="grid">Grid paper</option>
       <option value="dotted">Dotted paper</option>
     </select>
 
     <button onclick="addHeading()">✨ Add heading</button>
     <button onclick="addSticker()">🌷 Add flower</button>
+
   </div>
 
-  <div id="page" contenteditable="true" class="lined">
+  <div id="page" class="lined" contenteditable="true">
     Start writing your beautiful notes here... 💕
   </div>
 
   <p class="status" id="status">Your notebook is ready 🌸</p>
+
 </main>
 
 <script>
-const page = document.getElementById('page');
+const page = document.getElementById("page");
+
+const params = new URLSearchParams(window.location.search);
+
+const notebookId = params.get("id") || "default";
+const notebookName = params.get("name") || "My beautiful notebook";
+
+document.getElementById("notebookTitle").textContent =
+  notebookName + " ✨";
+
+document.title = notebookName + " | Paperbloom";
+
+const storageKey = "paperbloomNotes_" + notebookId;
+
+function saveNotes() {
+  localStorage.setItem(storageKey, page.innerHTML);
+
+  document.getElementById("status").textContent =
+    "Saved successfully! 💗";
+}
 
 function changeColour(colour) {
-  document.execCommand('foreColor', false, colour);
+  document.execCommand("foreColor", false, colour);
+  page.focus();
 }
 
 function changePaper(style) {
   page.className = style;
 }
 
+function formatText(format) {
+  document.execCommand(format, false, null);
+  page.focus();
+}
+
 function addHeading() {
-  document.execCommand('formatBlock', false, 'h2');
+  document.execCommand("formatBlock", false, "h2");
+  page.focus();
 }
 
 function addSticker() {
-  document.execCommand('insertText', false, ' 🌸 ');
+  document.execCommand("insertText", false, " 🌸 ");
+  page.focus();
 }
 
-function saveNotes() {
-  localStorage.setItem('paperbloomNotes', page.innerHTML);
-  document.getElementById('status').textContent =
-    'Saved successfully! 💗';
-}
+// Automatically save whenever notes are changed.
+page.addEventListener("input", function() {
+  saveNotes();
+  document.getElementById("status").textContent =
+    "Changes saved automatically 💕";
+});
 
-const saved = localStorage.getItem('paperbloomNotes');
-if (saved) page.innerHTML = saved;
+// Load the notes belonging to this particular notebook.
+const savedNotes = localStorage.getItem(storageKey);
+
+if (savedNotes) {
+  page.innerHTML = savedNotes;
+}
 </script>
 
 </body>
